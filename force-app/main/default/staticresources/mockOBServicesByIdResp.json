@@ -1,0 +1,16 @@
+{
+    "archived": 0,
+    "displayed_name": "username@domain.com",
+    "enabled": 1,
+    "id": 12345,
+    "last_backup": "2021-06-01 20:11:16",
+    "num_items": 10,
+    "org_id": "00D000000000000000",
+    "provider": "Salesforce Data",
+    "return_code": 2,
+    "return_message": "NULL",
+    "secondary_name": "JOHN SMITH",
+    "status": "OK",
+    "subtitle": null,
+    "total_size": 12345
+}

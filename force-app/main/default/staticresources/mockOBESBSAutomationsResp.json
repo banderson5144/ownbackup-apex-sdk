@@ -1,0 +1,5 @@
+{
+    "ValidationRule": ["Custom_Object__c.Validation_Rule"],
+    "ApexTrigger": ["fooTrigger"],
+    "FlowDefinition": ["fooFlow"]
+}

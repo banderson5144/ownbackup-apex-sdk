@@ -1,0 +1,12 @@
+[
+    {
+        "created_at": "Tue, 09 Mar 2021 14:47:06 GMT",
+        "event_id": 12345,
+        "ip_address": "123.45.67.89",
+        "key": "account.create",
+        "service_id": null,
+        "source": "web app",
+        "user_email": "username@domain.com",
+        "user_id": 12345
+    }
+]

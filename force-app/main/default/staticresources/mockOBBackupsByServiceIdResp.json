@@ -1,0 +1,18 @@
+[
+    {
+        "completed_at": "2021-05-25 17:44:57",
+        "id": 12345,
+        "num_api_calls": 123,
+        "num_bulk_api_batches": 0,
+        "num_deleted_items": 0,
+        "num_inserted_items": 0,
+        "num_sections": 0,
+        "num_sections_error": 0,
+        "num_sections_info": 0,
+        "num_sections_ok": 0,
+        "num_sections_warning": 0,
+        "num_updated_items": 0,
+        "status": "OK",
+        "trigger_type": "scheduled"
+    }
+]

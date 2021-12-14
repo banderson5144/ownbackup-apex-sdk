@@ -1,0 +1,18 @@
+[
+    {
+        "id": 12345,
+        "template_type": "NODES",
+        "name": "foo template",
+        "description": "foo",
+        "source_service_id": 12345,
+        "anonymization_template_id": 12345,
+        "source_service_name": "username@domain.com",
+        "source_service_available": true,
+        "is_locked": false,
+        "is_draft": true,
+        "editor_email": "username@domain.com",
+        "destination_size": "DEV",
+        "latest_seed_date": "2021-05-25 17:44:57",
+        "is_favorite": false
+    }
+]

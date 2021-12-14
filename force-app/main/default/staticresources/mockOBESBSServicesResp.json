@@ -1,0 +1,10 @@
+[
+    {
+        "name": "username@domain.com",
+        "allowed_as_a_destination": false,
+        "indexed": false,
+        "type": "PRODUCTION",
+        "id": 12345,
+        "suffix": ""
+    }
+]
