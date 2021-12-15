@@ -34,44 +34,44 @@ public with sharing class OBRestAPI
     public class OBBackupResp
     {
         public Integer num_sections_error;
-		public Integer num_sections;
-		public Integer num_sections_info;
-		public Integer num_inserted_items;
-		public Integer num_sections_ok;
-		public Integer num_deleted_items;
-		public Integer num_sections_warning;
-		public Integer num_bulk_api_batches;
-		public Integer num_updated_items;
-		public Integer num_api_calls;
-		public String status;
-		public Integer id;
-		public String trigger_type;
-		public String completed_at;
+        public Integer num_sections;
+        public Integer num_sections_info;
+        public Integer num_inserted_items;
+        public Integer num_sections_ok;
+        public Integer num_deleted_items;
+        public Integer num_sections_warning;
+        public Integer num_bulk_api_batches;
+        public Integer num_updated_items;
+        public Integer num_api_calls;
+        public String status;
+        public Integer id;
+        public String trigger_type;
+        public String completed_at;
     }
 
     public class OBBackupObjResp
     {
         public String name;
-		public Integer num_api_calls;
-		public String message;
-		public Integer num_deleted_items;
-		public Integer id;
-		public Integer num_inserted_items;
-		public String download_removed_link;
-		public Integer num_items;
-		public String download_link;
-		public Integer num_updated_items;
-		public String download_changed_link;
-		public String status;
-		public String download_added_link;
+        public Integer num_api_calls;
+        public String message;
+        public Integer num_deleted_items;
+        public Integer id;
+        public Integer num_inserted_items;
+        public String download_removed_link;
+        public Integer num_items;
+        public String download_link;
+        public Integer num_updated_items;
+        public String download_changed_link;
+        public String status;
+        public String download_added_link;
     }
 
     public class OBJobResp
     {
-		public String status;
-		public Integer progress;
-		public String title;
-		public Integer id;
+        public String status;
+        public Integer progress;
+        public String title;
+        public Integer id;
     }
 
     public class OBGDPRReq
@@ -95,41 +95,41 @@ public with sharing class OBRestAPI
     public class OBEventResp
     {
         public Integer service_id;
-		public String key;
-		public String source;
-		public String ip_address;
-		public String user_email;
-		public Integer event_id;
-		public Integer user_id;
-		public String created_at;
+        public String key;
+        public String source;
+        public String ip_address;
+        public String user_email;
+        public Integer event_id;
+        public Integer user_id;
+        public String created_at;
     }
 
     public class OBESBSServiceResp
     {
         public String type;
-		public Boolean indexed;
-		public Integer id;
-		public Boolean allowed_as_a_destination;
-		public String suffix;
-		public String name;
+        public Boolean indexed;
+        public Integer id;
+        public Boolean allowed_as_a_destination;
+        public String suffix;
+        public String name;
     }
 
     public class OBESBSTemplateResp
     {
         public Boolean source_service_available;
-		public String source_service_name;
-		public Boolean is_locked;
-		public String anonymization_template_id;
-		public Boolean is_draft;
-		public Integer source_service_id;
-		public String editor_email;
-		public String description;
-		public String destination_size;
-		public String name;
-		public String latest_seed_date;
-		public String template_type;
-		public Boolean is_favorite;
-		public Integer id;
+        public String source_service_name;
+        public Boolean is_locked;
+        public String anonymization_template_id;
+        public Boolean is_draft;
+        public Integer source_service_id;
+        public String editor_email;
+        public String description;
+        public String destination_size;
+        public String name;
+        public String latest_seed_date;
+        public String template_type;
+        public Boolean is_favorite;
+        public Integer id;
     }
 
     public class OBESBSServiceAutomationResp
