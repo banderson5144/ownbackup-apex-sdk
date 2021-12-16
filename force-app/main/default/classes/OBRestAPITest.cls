@@ -1,16 +1,31 @@
 @isTest
 public with sharing class OBRestAPITest
 {
+    private static void setMocks(map<String,String> mocks)
+    {
+        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
+
+        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
+
+        if(mocks != null)
+        {
+            for(String k : mocks.keySet())
+            {
+                multimock.setStaticResource(mocks.get(k),k);
+            }
+        }
+
+        multimock.setStatusCode(200);
+        multimock.setHeader('Content-Type', 'application/json');
+
+        Test.setMock(HttpCalloutMock.class, multimock);
+    }
+
     @isTest
     private static void testOBAuthCall()
     {
         // Test data setup
-        StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
-        mock.setStaticResource('mockOBAuthResp');
-        mock.setStatusCode(200);
-        mock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, mock);
+        setMocks(null);
     
         // Actual test
         Test.startTest();
@@ -27,13 +42,7 @@ public with sharing class OBRestAPITest
     private static void testOBGetAllServices()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/services', 'mockOBAllServicesResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBAllServicesResp' => 'callout:OB_REST_API/v1/services'});
     
         // Actual test
         Test.startTest();
@@ -51,13 +60,7 @@ public with sharing class OBRestAPITest
     private static void testOBGetServiceById()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/services/12345', 'mockOBServicesByIdResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBServicesByIdResp' => 'callout:OB_REST_API/v1/services/12345'});
     
         // Actual test
         Test.startTest();
@@ -75,13 +78,7 @@ public with sharing class OBRestAPITest
     private static void testOBBackupServiceNow()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/services/12345/backup_now', 'mockOBEmptyResponse');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBEmptyResponse' => 'callout:OB_REST_API/v1/services/12345/backup_now'});
     
         // Actual test
         Test.startTest();
@@ -96,13 +93,7 @@ public with sharing class OBRestAPITest
     private static void testOBBackupSpecificObjs()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/services/12345/backup_specific_objects_now', 'mockOBEmptyResponse');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBEmptyResponse' => 'callout:OB_REST_API/v1/services/12345/backup_specific_objects_now'});
     
         // Actual test
         Test.startTest();
@@ -117,13 +108,7 @@ public with sharing class OBRestAPITest
     private static void testOBGetBackupsByServiceId()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/services/12345/backups', 'mockOBBackupsByServiceIdResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBBackupsByServiceIdResp' => 'callout:OB_REST_API/v1/services/12345/backups'});
     
         // Actual test
         Test.startTest();
@@ -141,13 +126,7 @@ public with sharing class OBRestAPITest
     private static void testOBGetBackupById()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/services/12345/backups/12345', 'mockOBBackupByIdResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBBackupByIdResp' => 'callout:OB_REST_API/v1/services/12345/backups/12345'});
     
         // Actual test
         Test.startTest();
@@ -165,13 +144,7 @@ public with sharing class OBRestAPITest
     private static void testOBGetObjsInBkup()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/services/12345/backups/12345/objects', 'mockOBGetObjsInBackupResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBGetObjsInBackupResp' => 'callout:OB_REST_API/v1/services/12345/backups/12345/objects'});
     
         // Actual test
         Test.startTest();
@@ -189,13 +162,7 @@ public with sharing class OBRestAPITest
     private static void testOBGetListOfJobs()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/jobs', 'mockOBListOfJobsResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBListOfJobsResp' => 'callout:OB_REST_API/v1/jobs'});
     
         // Actual test
         Test.startTest();
@@ -213,13 +180,7 @@ public with sharing class OBRestAPITest
     private static void testOBJobById()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/jobs/12345', 'mockOBJobByIdResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBJobByIdResp' => 'callout:OB_REST_API/v1/jobs/12345'});
     
         // Actual test
         Test.startTest();
@@ -237,13 +198,7 @@ public with sharing class OBRestAPITest
     private static void testOBGetEvents()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/events?from=', 'mockOBGetEventsResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBGetEventsResp' => 'callout:OB_REST_API/v1/events?from='});
     
         // Actual test
         Test.startTest();
@@ -261,13 +216,7 @@ public with sharing class OBRestAPITest
     private static void testOBGetAllESBSServices()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/sbs/services', 'mockOBESBSServicesResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBESBSServicesResp' => 'callout:OB_REST_API/v1/sbs/services'});
     
         // Actual test
         Test.startTest();
@@ -285,13 +234,7 @@ public with sharing class OBRestAPITest
     private static void testOBGetAllESBSTemplates()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/sbs/templates', 'mockOBESBSTemplatesResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBESBSTemplatesResp' => 'callout:OB_REST_API/v1/sbs/templates'});
     
         // Actual test
         Test.startTest();
@@ -309,13 +252,7 @@ public with sharing class OBRestAPITest
     private static void testOBGetESBSServiceAutomations()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/sbs/services/12345/automations', 'mockOBESBSAutomationsResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBESBSAutomationsResp' => 'callout:OB_REST_API/v1/sbs/services/12345/automations'});
     
         // Actual test
         Test.startTest();
@@ -333,13 +270,7 @@ public with sharing class OBRestAPITest
     private static void testOBSubmitGDRPRectifyReq()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/services/12345/gdpr/rectify', 'mockOBGDPRResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBGDPRResp' => 'callout:OB_REST_API/v1/services/12345/gdpr/rectify'});
     
         // Actual test
         Test.startTest();
@@ -358,13 +289,7 @@ public with sharing class OBRestAPITest
     private static void testOBSubmitGDRPForgetReq()
     {
         // Test data setup
-        MultiStaticResourceCalloutMock multimock = new MultiStaticResourceCalloutMock();
-        multimock.setStaticResource('callout:OB_REST_API/auth/v1/login', 'mockOBAuthResp');
-        multimock.setStaticResource('callout:OB_REST_API/v1/services/12345/gdpr/forget', 'mockOBGDPRResp');
-        multimock.setStatusCode(200);
-        multimock.setHeader('Content-Type', 'application/json');
-
-        Test.setMock(HttpCalloutMock.class, multimock);
+        setMocks(new map<String,String>{'mockOBGDPRResp' => 'callout:OB_REST_API/v1/services/12345/gdpr/forget'});
     
         // Actual test
         Test.startTest();
