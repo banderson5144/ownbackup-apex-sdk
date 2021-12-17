@@ -149,7 +149,7 @@ public with sharing class OBRestAPI
     */
     private void authorize()
     {
-        String body = 'email={!$Credential.Username}&password={!$Credential.Password}';
+        String body = 'email={!HTMLENCODE($Credential.Username)}&password={!HTMLENCODE($Credential.Password)}';
         map<String,String> headers = new map<String,String>{'Content-Type'=>'application/x-www-form-urlencoded'};
         String jsonStr = baseHttp('/auth/v1/login', 'POST', headers, body);
         OBAuthResp res = (OBAuthResp)JSON.deserialize(jsonStr, OBRestAPI.OBAuthResp.class);
