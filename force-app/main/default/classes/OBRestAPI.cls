@@ -144,6 +144,9 @@ public with sharing class OBRestAPI
         public Integer id;
     }
 
+    /**
+    * @description Authenticate a user by email and password.
+    */
     private void authorize()
     {
         String body = 'email={!$Credential.Username}&password={!$Credential.Password}';
@@ -153,6 +156,13 @@ public with sharing class OBRestAPI
         this.ObSessionId = res.session_id;
     }
 
+    /**
+    * @description Get a list of all services.
+    * @return Returns list of all services.
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBServicesResp[] res = ob.getAllServices();
+    */
     public OBServicesResp[] getAllServices()
     {
         String jsonStr = baseHttp('/v1/services', 'GET', null, null);
@@ -160,6 +170,14 @@ public with sharing class OBRestAPI
         return res;
     }
 
+    /**
+    * @description Get a specific service by Service id.
+    * @param serviceId Id of the service
+    * @return Returns a single service.
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBServicesResp res = ob.getServiceById('12345');
+    */
     public OBServicesResp getServiceById(String serviceId)
     {
         String jsonStr = baseHttp('/v1/services/'+serviceId, 'GET', null, null);
@@ -167,11 +185,26 @@ public with sharing class OBRestAPI
         return res;
     }
 
+    /**
+    * @description Start backup a service manually now by Service id.
+    * @param serviceId Id of the service
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * ob.backupServiceNow('12345');
+    */
     public void backupServiceNow(String serviceId)
     {
         String jsonStr = baseHttp('/v1/services/'+serviceId+'/backup_now', 'POST', null, null);
     }
 
+    /**
+    * @description Start a backup for specific objects manually now by Service id.
+    * @param serviceId Id of the service
+    * @param lstOfObjs List of objects
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * ob.backupSpecificObjs('12345',new String[]{'Account','Contact'});
+    */
     public void backupSpecificObjs(String serviceId, String[] lstOfObjs)
     {
         String[] bodyArr = new String[]{};
@@ -184,6 +217,14 @@ public with sharing class OBRestAPI
         String jsonStr = baseHttp('/v1/services/'+serviceId+'/backup_specific_objects_now', 'POST', null, String.join(bodyArr,'&'));
     }
 
+    /**
+    * @description Get a list of all available backups for a given service.
+    * @param serviceId Id of the service
+    * @return List of Backup responses
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBBackupResp[] res = ob.getBackupsByServiceId('12345');
+    */
     public OBBackupResp[] getBackupsByServiceId(String serviceId)
     {
         String jsonStr = baseHttp('/v1/services/'+serviceId+'/backups', 'GET', null, null);
@@ -191,6 +232,15 @@ public with sharing class OBRestAPI
         return res;
     }
 
+    /**
+    * @description Get a specific backup by the Service id and Backup id. Parameter backup_id can be 'last'
+    * @param serviceId Id of the service
+    * @param backupId Id of the backup
+    * @return Single instance of a Backup responses
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBBackupResp res = ob.getBackupById('12345','12345');
+    */
     public OBBackupResp getBackupById(String serviceId, String backupId)
     {
         String jsonStr = baseHttp('/v1/services/'+serviceId+'/backups/'+backupId, 'GET', null, null);
@@ -198,6 +248,15 @@ public with sharing class OBRestAPI
         return res;
     }
 
+    /**
+    * @description Get list of objects in a backup by Service id and Backup id. Parameter backup_id can be 'last'.
+    * @param serviceId Id of the service
+    * @param backupId Id of the backup
+    * @return List of objecst in a backup
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBBackupObjResp[] res = ob.getObjsInBkup('12345','12345');
+    */
     public OBBackupObjResp[] getObjsInBkup(String serviceId, String backupId)
     {
         String jsonStr = baseHttp('/v1/services/'+serviceId+'/backups/'+backupId+'/objects', 'GET', null, null);
@@ -205,6 +264,13 @@ public with sharing class OBRestAPI
         return res;
     }
 
+    /**
+    * @description Get a list of all jobs.
+    * @return List of jobs
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBJobResp[] res = ob.getListOfJobs();
+    */
     public OBJobResp[] getListOfJobs()
     {
         String jsonStr = baseHttp('/v1/jobs', 'GET', null, null);
@@ -212,6 +278,14 @@ public with sharing class OBRestAPI
         return res;
     }
 
+    /**
+    * @description Get specific job by Id.
+    * @param jobId Id of the job
+    * @return Single instance of job
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBJobResp res = ob.getJobById('12345');
+    */
     public OBJobResp getJobById(String jobId)
     {
         String jsonStr = baseHttp('/v1/jobs/'+jobId, 'GET', null, null);
@@ -219,6 +293,21 @@ public with sharing class OBRestAPI
         return res;
     }
 
+    /**
+    * @description submitting a GDPR rectify request.
+    * @param jobId Id of the job
+    * @param req GDPR Request data
+    * @return Single instance of job
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBGDPRReq req = new OBRestAPI.OBGDPRReq();
+    * req.recordId = '00x000000000000000';
+    * req.tableName = 'Custom_Object__c';
+    * req.field = 'foo__c';
+    * req.value = 'bar';
+    * req.comment = 'Some comments';
+    * OBRestAPI.OBGDPRResp res = ob.submitGDRPRectifyReq('12345', req);
+    */
     public OBGDPRResp submitGDRPRectifyReq(String serviceId, OBGDPRReq req)
     {
         map<String,String> headers = new map<String,String>{'Content-Type'=>'application/x-www-form-urlencoded'};
@@ -227,6 +316,19 @@ public with sharing class OBRestAPI
         return res;
     }
 
+    /**
+    * @description submitting a GDPR forget request.
+    * @param jobId Id of the job
+    * @param req GDPR Request data
+    * @return Single instance of job
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBGDPRReq req = new OBRestAPI.OBGDPRReq();
+    * req.recordId = '00x000000000000000';
+    * req.tableName = 'Custom_Object__c';
+    * req.comment = 'Some comments';
+    * OBRestAPI.OBGDPRResp res = ob.submitGDRPForgetReq('12345', req);
+    */
     public OBGDPRResp submitGDRPForgetReq(String serviceId, OBGDPRReq req)
     {
         map<String,String> headers = new map<String,String>{'Content-Type'=>'application/x-www-form-urlencoded'};
@@ -235,6 +337,14 @@ public with sharing class OBRestAPI
         return res;
     }
 
+    /**
+    * @description Get the account event history from the beginning of time (default route) or all events that follows a specific event (use parameter with the id of an event), results are limited to 1,000 events per request.
+    * @param eventId Id of the event
+    * @return List of events
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBEventResp[] res = ob.getEvents('12345');
+    */
     public OBEventResp[] getEvents(String eventId)
     {
         String jsonStr = baseHttp('/v1/events?from='+(eventId!=null?eventId:''), 'GET', null, null);
@@ -242,6 +352,13 @@ public with sharing class OBRestAPI
         return res;
     }
 
+    /**
+    * @description Get all services that can be used as destination for seeds.
+    * @return List of ESBS Services
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBESBSServiceResp[] res = ob.getAllESBSServices();
+    */
     public OBESBSServiceResp[] getAllESBSServices()
     {
         String jsonStr = baseHttp('/v1/sbs/services', 'GET', null, null);
@@ -249,6 +366,13 @@ public with sharing class OBRestAPI
         return res;
     }
 
+    /**
+    * @description Get all seeding templates that the user has access to.
+    * @return List of ESBS Templates
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBESBSTemplateResp[] res = ob.getAllESBSTemplates();
+    */
     public OBESBSTemplateResp[] getAllESBSTemplates()
     {
         String jsonStr = baseHttp('/v1/sbs/templates', 'GET', null, null);
@@ -256,6 +380,14 @@ public with sharing class OBRestAPI
         return res;    
     }
 
+    /**
+    * @description Get active automations names by automation type, of the specified service (excluding automations from managed packages, since they cannot be disabled by salesforce).
+    * @param serviceId Id of service
+    * @return List of SF automations of service
+    * @example
+    * OBRestAPI ob = new OBRestAPI();
+    * OBRestAPI.OBESBSServiceAutomationResp res = ob.getESBSServiceAutomations('12345');
+    */
     public OBESBSServiceAutomationResp getESBSServiceAutomations(String serviceId)
     {
         String jsonStr = baseHttp('/v1/sbs/services/'+serviceId+'/automations', 'GET', null, null);
@@ -263,6 +395,18 @@ public with sharing class OBRestAPI
         return res;
     }
 
+    /**
+    * @description Base HTTP call for all API calls
+    * @param path URL Path for API call
+    * @param method HTTP Method used for API call
+    * @param headers any extra HTTP headers needed for API call
+    * @param body any data that needs to be sent
+    * @return Body response from API call
+    * @example
+    * String body = 'email={!$Credential.Username}&password={!$Credential.Password}';
+    * map<String,String> headers = new map<String,String>{'Content-Type'=>'application/x-www-form-urlencoded'};
+    * String jsonStr = baseHttp('/auth/v1/login', 'POST', headers, body);
+    */
     private String baseHttp(String path, String method, map<String,String> headers, String body)
     {
         HttpRequest request = new HttpRequest();
